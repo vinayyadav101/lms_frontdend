@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 
-import Footer from "./component/fotor/Footer";
+import HomePage from "./Pages/HomePage";
 
 export default function App(){
   return(
-    <>
+    
     <Routes>
-      <Route path="/*" element={<Footer/>}/>
+      <Route path="/" element={<HomePage/>}/>
     </Routes>
-    </>
+    
   )
 }

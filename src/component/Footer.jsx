@@ -1,4 +1,5 @@
 import {BsFacebook , BsInstagram , BsLinkedin , BsTwitter } from 'react-icons/bs'
+
 export default function Footer(){
     const date = new Date()
     const year = date.getFullYear()
