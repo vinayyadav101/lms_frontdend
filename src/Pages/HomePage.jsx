@@ -31,7 +31,6 @@ export default function HomePage(){
                         </Link>
                     </div>
                 </div>
-
                 <div className="w-1/2 flex items-center justify-center">
                     <img src={HomeImage} alt="image homepageimage" />
                 </div>

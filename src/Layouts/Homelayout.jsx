@@ -1,12 +1,14 @@
 import { AiFillClockCircle, AiFillCloseCircle } from 'react-icons/ai'
 import { FiMenu } from 'react-icons/fi'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Footer from '../component/Footer'
 
 
 export default function HomeLayout({ children }){
-
+    // const dispatch = useDispatch()
+    const isLogin = useSelector(state => state?.auth?.isLogin)
 
     return (
         <div className="min-h-[90vh]">
@@ -23,7 +25,7 @@ export default function HomeLayout({ children }){
                 <div className="drawer-side w-fit">
                     <label htmlFor="my-drawer" className="drawer-overlay" aria-label='close sidebar'>
                     </label>
-                    <ul className="menu p-4 w-48 sm:w-80 bg-base-200 text-base-content relative">
+                    <ul className="menu p-4 w-48 sm:w-80 bg-base-200 text-base-content relative h-screen">
                         <li className="w-fit absolute right-2 z-50">
                             <label htmlFor="my-drawer" className="cursor-pointer">
                                  <AiFillCloseCircle size={24} />
@@ -45,13 +47,50 @@ export default function HomeLayout({ children }){
                         <li>
                             <Link to="/about">About Us</Link>
                         </li>
+                        {
+                            isLogin && 
+                                <div className='flex mt-auto gap-2 justify-center items-center pb-2 bottom-0 '>
+                                    <div className='w-full'>
+                                        <button className='w-[100%] btn btn-secondary btn-soft  '>
+                                            <Link to="profile">
+                                                profile
+                                            </Link>
+                                        </button>
+                                    </div>
+                                    <div className='w-full'>
+                                        <button className='w-[100%] btn btn-primary btn-soft'>
+                                            LogOut
+                                        </button>
+                                    </div>
+                                </div>
+                        }
+                        {
+                            !isLogin && 
+                                <div className='flex mt-auto gap-2 justify-center items-center pb-2 bottom-0 '>
+                                    <div className='w-full'>
+                                        <button className='w-[100%] btn btn-secondary btn-soft  '>
+                                            <Link to="login">
+                                                Login
+                                            </Link>
+                                        </button>
+                                    </div>
+                                    <div className='w-full'>
+                                        <button className='w-[100%] btn btn-primary btn-soft'>
+                                            <Link to="singup">
+                                                SingUp
+                                            </Link>
+                                        </button>
+                                    </div>
+                                </div>
+                        }
+
                     </ul>
                 </div>
             </div>
             { children }
 
-
             <Footer />
+
         </div>
     );
 }
