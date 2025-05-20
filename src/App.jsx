@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
+import AboutUs from "./Pages/AboutUsPage";
 import HomePage from "./Pages/HomePage";
 
 export default function App(){
@@ -7,7 +8,7 @@ export default function App(){
     
     <Routes>
       <Route path="/" element={<HomePage/>}/>
-      {/* <Route path="/login" element="profile"/> */}
+      <Route path="/about" element={<AboutUs/>}/>
     </Routes>
     
   
