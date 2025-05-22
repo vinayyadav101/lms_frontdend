@@ -1,9 +1,8 @@
 import axios from 'axios'
 
-const BASEURL = "https://"
+const BASEURL = "http://localhost:8082"
 
 export const instance = axios.create({
     baseURL:BASEURL,
-    timeout:1000,
     withCredentials:true
 })

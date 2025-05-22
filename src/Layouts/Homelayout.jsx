@@ -1,15 +1,25 @@
-import { AiFillClockCircle, AiFillCloseCircle } from 'react-icons/ai'
+import {  AiFillCloseCircle } from 'react-icons/ai'
 import { FiMenu } from 'react-icons/fi'
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Footer from '../component/Footer'
+import { logout } from '../redux/slices/allSlices';
 
 
 export default function HomeLayout({ children }){
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const isLogin = useSelector(state => state?.auth?.isLogin)
 
+
+    async function handelLogout(){
+        const res = await dispatch(logout())
+        if (res.payload) {
+            navigate('/')
+        }
+    }
+    
     return (
         <div className="min-h-[90vh]">
             <div className="drawer left-0 z-10">
@@ -58,7 +68,7 @@ export default function HomeLayout({ children }){
                                         </button>
                                     </div>
                                     <div className='w-full'>
-                                        <button className='w-[100%] btn btn-primary btn-soft'>
+                                        <button onClick={handelLogout} className='w-[100%] btn btn-primary btn-soft'>
                                             LogOut
                                         </button>
                                     </div>
@@ -69,15 +79,15 @@ export default function HomeLayout({ children }){
                                 <div className='flex mt-auto gap-2 justify-center items-center pb-2 bottom-0 '>
                                     <div className='w-full'>
                                         <button className='w-[100%] btn btn-secondary btn-soft  '>
-                                            <Link to="login">
+                                            <Link to="/login">
                                                 Login
                                             </Link>
                                         </button>
                                     </div>
                                     <div className='w-full'>
                                         <button className='w-[100%] btn btn-primary btn-soft'>
-                                            <Link to="singup">
-                                                SingUp
+                                            <Link to="/signup">
+                                                signup
                                             </Link>
                                         </button>
                                     </div>
