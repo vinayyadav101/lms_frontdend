@@ -1,4 +1,4 @@
-import notfound from '../images/notfound.png'
+import notfound from '../images/ChatGPT Image May 25, 2025, 07_46_39 PM.png'
 import HomeLayout from '../Layouts/Homelayout'
 export default function NotFountPage() {
     return(
