@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { instance } from "../../Helpers/axiosinstance";
 
 const initialState = {
-    isLogin : localStorage.getItem('isLogin') || false,
+    isLogin : localStorage.getItem("isLogin") || false,
     role : localStorage.getItem("role") || "",
     data: localStorage.getItem('data') || {}
 }
@@ -85,5 +85,4 @@ const authSlice = createSlice({
 })
 
 
-export const {} = authSlice.actions
 export default authSlice.reducer

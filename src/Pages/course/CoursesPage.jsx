@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-import CourseListCard from "../component/CourseListCard";
-import { instance } from "../Helpers/axiosinstance";
-import HomeLayout from "../Layouts/Homelayout";
+import CourseListCard from "../../component/CourseListCard";
+import { instance } from "../../Helpers/axiosinstance";
+import HomeLayout from "../../Layouts/Homelayout";
 export default function CoursesPage(){
 
     const  [coursesList , setCoursesList] = useState([])
