@@ -3,26 +3,31 @@ import toast from "react-hot-toast";
 
 import { instance } from "../../Helpers/axiosinstance";
 
+
+
 const initialState = {
     isLogin : localStorage.getItem("isLogin") || false,
     role : localStorage.getItem("role") || "",
-    data: localStorage.getItem('data') || {}
+    data: localStorage.getItem('data')
+            ? JSON.parse(localStorage.getItem("data"))
+            : {}
 }
 
 const authHandler = (state , action)=>{
     
     const data = action?.payload?.data
+    
 
             localStorage.setItem("isLogin" , true)
-            localStorage.setItem("role", JSON.stringify(data.role))
-            localStorage.setItem("data",JSON.stringify(data))    
+            localStorage.setItem("role", data?.role)
+            localStorage.setItem("data", JSON.stringify(data))    
 
             state.data = data
             state.isLogin = true
             state.role = data?.role
             
 }
-export const createAccount = createAsyncThunk('autgh/singup' , async(data)=>{
+export const createAccount = createAsyncThunk('auth/signup' , async(data)=>{
     
     try {
         const response = instance.post('/api/v1/user/register' , data)
@@ -68,6 +73,36 @@ export const logout = createAsyncThunk('augth/logout',async()=>{
     }
 })
 
+
+export const updateProfile = createAsyncThunk('auth/update',async({id , editProfile})=>{
+    
+    try {
+        const response = instance.put(`/api/v1/user/update/${id}` , editProfile)
+        toast.promise(response , {
+            loading:"user data update is process.",
+            success:"user update successfully.",
+            error:response?.message
+        })
+
+        return (await response).data.success
+
+    } catch (error) {
+        toast.error(error.message)
+    }
+})
+
+export const getProfile = createAsyncThunk('auth/get' , async(id)=>{
+    try {
+        const response = await instance.get(`/api/v1/user/getprofile/${id}`)
+
+            return response?.data
+
+    } catch (error) {
+        toast.error(error.message)
+        
+    }
+})
+
 const authSlice = createSlice({
     name:"auth",
     initialState,
@@ -75,6 +110,7 @@ const authSlice = createSlice({
     extraReducers:(builder)=>{
         builder.addCase(createAccount.fulfilled , authHandler)
         builder.addCase(login.fulfilled , authHandler)
+        builder.addCase(getProfile.fulfilled , authHandler)
         builder.addCase(logout.fulfilled , (state)=>{
             localStorage.clear()
             state.data={}

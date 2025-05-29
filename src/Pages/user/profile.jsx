@@ -1,8 +1,10 @@
 import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 import HomeLayout from "../../Layouts/Homelayout"
 export default function Profilepage() {
     const { data }  = useSelector(state => state.auth)
+    const navigator = useNavigate()
     
     return(
         <HomeLayout>
@@ -22,7 +24,7 @@ export default function Profilepage() {
                         <button className="bg-blue-500 py-3 px-5">
                             Change Password
                         </button>
-                        <button className="bg-red-500 py-3 px-5">
+                        <button className="bg-red-500 py-3 px-5" onClick={()=>navigator(`/user/editprofile/${data._id}`,{state:data})}>
                             Edit Profile
                         </button>
                         {

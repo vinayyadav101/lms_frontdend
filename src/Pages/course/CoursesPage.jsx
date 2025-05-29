@@ -21,9 +21,7 @@ export default function CoursesPage(){
                 const courses = (await response).data
 
                 if (courses) {
-                    
-                    setCoursesList(courses?.data)
-                    
+                    setCoursesList(courses?.data)  
                 }
 
         } catch (error) {

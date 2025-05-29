@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Footer from '../component/Footer'
-import { logout } from '../redux/slices/allSlices';
+import { logout } from '../redux/slices/authSlice';
 
 
 export default function HomeLayout({ children }){
@@ -62,7 +62,7 @@ export default function HomeLayout({ children }){
                                 <div className='flex mt-auto gap-2 justify-center items-center pb-2 bottom-0 '>
                                     <div className='w-full'>
                                         <button className='w-[100%] btn btn-secondary btn-soft  '>
-                                            <Link to="profile">
+                                            <Link to="/user/profile">
                                                 profile
                                             </Link>
                                         </button>

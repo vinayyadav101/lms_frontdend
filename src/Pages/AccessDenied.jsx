@@ -1,4 +1,4 @@
-export default function AccessDenidePage() {
+export default function AccessDeniedPage() {
     return(
         <div>
             "hello"

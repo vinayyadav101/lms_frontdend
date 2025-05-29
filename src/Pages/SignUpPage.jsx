@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import HomeLayout from "../Layouts/Homelayout";
-import { createAccount } from "../redux/slices/allSlices";
+import { createAccount } from "../redux/slices/authSlice";
 
 export default function SignUp(){
     
@@ -21,7 +21,7 @@ export default function SignUp(){
         avatar:""
     })
 
-    function handelUserInput(e){
+    function handleUserInput(e){
         const {name ,value} = e.target
         
         setSignupData(state => ({...state , [name] : value}))  
@@ -37,7 +37,7 @@ export default function SignUp(){
         }
     }
 
-    async function handelSubmit(event){
+    async function handleSubmit(event){
         event.preventDefault()
         
         const {userName , email ,password , avatar} = signupData
@@ -89,7 +89,7 @@ export default function SignUp(){
                     <div className="text-2xl font-bold pb-3">
                         <h1>Registration</h1>
                     </div>
-                        <form onSubmit={handelSubmit} className="w-full flex flex-col gap-3" >
+                        <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3" >
                             <div className="pt-4 flex justify-center items-center">
                                 <label htmlFor="imageUpload" className="flex justify-center items-center w-h-16 h-16 rounded-full cursor-pointer overflow-hidden">
                                     {
@@ -101,9 +101,9 @@ export default function SignUp(){
                                 <input type="file" id="imageUpload"  className="hidden" onChange={hadelImageInput}/>
                             </div>
                             <div className="flex flex-col gap-5">
-                                <input type="text" id="userName" name="userName" className="border-2 border-base-300 outline-none w-full rounded-md px-1 py-2" onChange={handelUserInput} placeholder="Enter full name.." />
-                                <input type="email" id="email" name="email" className="border-2 border-base-300 outline-none w-full rounded-md px-1 py-2" onChange={handelUserInput} placeholder="Enter email.." />
-                                <input type="password" id="password" name="password"  className="border-2 border-base-300 outline-none w-full rounded-md px-1 py-2" onChange={handelUserInput} placeholder="Enter password.." />
+                                <input type="text" id="userName" name="userName" className="border-2 border-base-300 outline-none w-full rounded-md px-1 py-2" onChange={handleUserInput} placeholder="Enter full name.." />
+                                <input type="email" id="email" name="email" className="border-2 border-base-300 outline-none w-full rounded-md px-1 py-2" onChange={handleUserInput} placeholder="Enter email.." />
+                                <input type="password" id="password" name="password"  className="border-2 border-base-300 outline-none w-full rounded-md px-1 py-2" onChange={handleUserInput} placeholder="Enter password.." />
                             </div>
                             <div className="bttton">
                                 <button type="submit" className="btn btn-primary w-full hover:bg-blue-900">Submit</button>

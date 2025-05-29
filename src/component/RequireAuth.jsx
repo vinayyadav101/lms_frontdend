@@ -1,16 +1,16 @@
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
-import AccessDenidePage from "../Pages/AccessDenide";
 
 export default function RequireAuth({ myRoles }) {
     const {isLogin , role } = useSelector(state => state.auth)
 
+    
      if (isLogin) {        
-        if (myRoles.find(el=>el === role)) {
+        if (myRoles.includes(role)) {
             return <Outlet />
         }else{
-            return <Navigate to={<AccessDenidePage />} />
+            return <Navigate to='/access_denide' />
         }
     }else{
         return <Navigate to="/login" />
