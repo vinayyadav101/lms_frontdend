@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 import Homelayout from '../../Layouts/Homelayout'
 
 export default function CourseDetailPage() {
 
     const {data} = useSelector(state => state.auth)
+    const navigate = useNavigate()
+    console.log(data);
     
     const {
                 title,
@@ -30,9 +32,9 @@ export default function CourseDetailPage() {
                     <p><span>Description</span>{description}</p>
                     <p><span>Instructor</span>{createdBy}</p>
                     {
-                        data.subscription === "active" &&
-                                        <button className="btn btn-primary">
-                                            Add Lectures
+                        !data.subscription &&
+                                        <button className="btn btn-primary" onClick={()=>navigate('/course/payment/subscribe')}>
+                                            buy Subscription
                                         </button>
                     }
                 </div>
