@@ -27,6 +27,13 @@ const authHandler = (state , action)=>{
             state.role = data?.role
             
 }
+
+const stateClearHandler = (state)=>{
+            localStorage.clear()
+            state.data={}
+            state.isLogin=false
+            state.role=""
+        }
 export const createAccount = createAsyncThunk('auth/signup' , async(data)=>{
     
     try {
@@ -35,12 +42,12 @@ export const createAccount = createAsyncThunk('auth/signup' , async(data)=>{
         toast.promise(response , {
             loading:"wait! , account creations is process.",
             success:"account sucessfully created.",
-            error:response?.data?.message
         })
             return (await response).data
 
     } catch (error) {
-        toast.error(error.message)
+        toast.error(error?.response?.data?.message || error?.message)
+        throw error
     }
 })
 export const login = createAsyncThunk('auth/login', async(data)=>{
@@ -50,11 +57,11 @@ export const login = createAsyncThunk('auth/login', async(data)=>{
             toast.promise(response , {
                 loading:"wite for login!",
                 success:"user sucessfully login.",
-                error:response?.data?.message
             })
-            return (await response).data
-    } catch (error) {
-        toast.error(error.message)
+             return (await response).data
+    } catch (error) {   
+        toast.error(error?.response?.data?.message || error?.message)
+        throw error
     }
 })
 
@@ -65,11 +72,11 @@ export const logout = createAsyncThunk('augth/logout',async()=>{
             toast.promise(response,{
                 loading:"logout process inisiat wait!",
                 success:"user sucessfully logout",
-                error:response?.data?.message
             })
 
     } catch (error) {
-        toast.error(error.message)
+        toast.error(error?.response?.data?.message || error?.message)
+        throw error
     }
 })
 
@@ -81,13 +88,13 @@ export const updateProfile = createAsyncThunk('auth/update',async({id , editProf
         toast.promise(response , {
             loading:"user data update is process.",
             success:"user update successfully.",
-            error:response?.message
         })
 
         return (await response).data.success
 
     } catch (error) {
-        toast.error(error.message)
+        toast.error(error?.response?.data?.message || error?.message)
+        throw error   
     }
 })
 
@@ -98,10 +105,21 @@ export const getProfile = createAsyncThunk('auth/get' , async(id)=>{
             return response?.data
 
     } catch (error) {
-        toast.error(error.message)
-        
+        toast.error(error?.response?.data?.message || error?.message)
+        throw error
     }
 })
+
+ export const tokenVerify = createAsyncThunk('auth/token/verify',async()=> {
+    try {
+      
+      await instance.get('/api/v1/user/token-verify')
+      
+    } catch (error) {
+      toast.error(error.response.data.message)
+      throw error
+    }
+  })
 
 const authSlice = createSlice({
     name:"auth",
@@ -111,12 +129,8 @@ const authSlice = createSlice({
         builder.addCase(createAccount.fulfilled , authHandler)
         builder.addCase(login.fulfilled , authHandler)
         builder.addCase(getProfile.fulfilled , authHandler)
-        builder.addCase(logout.fulfilled , (state)=>{
-            localStorage.clear()
-            state.data={}
-            state.isLogin=false
-            state.role=""
-        })
+        builder.addCase(tokenVerify.rejected , stateClearHandler)
+        builder.addCase(logout.fulfilled , stateClearHandler)
     }
 })
 
