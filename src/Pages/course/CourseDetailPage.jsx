@@ -7,7 +7,6 @@ export default function CourseDetailPage() {
 
     const {data} = useSelector(state => state.auth)
     const navigate = useNavigate()
-    console.log(data);
     
     const {
                 title,
@@ -32,7 +31,7 @@ export default function CourseDetailPage() {
                     <p><span>Description</span>{description}</p>
                     <p><span>Instructor</span>{createdBy}</p>
                     {
-                        !data.subscription &&
+                        !data.subscription || data.subscription.status !== "Active" &&
                                         <button className="btn btn-primary" onClick={()=>navigate('/course/payment/subscribe')}>
                                             buy Subscription
                                         </button>

@@ -10,7 +10,12 @@ const initialState = {
     plan_id:"",
     subscription_id :"",
 }
-
+const stateClear = (state)=>{
+        state.isSubscribe = false,
+        state.plan_id = "",
+        state.rezorpay_key ="",
+        state.subscription_id =""
+}
 export const getRezorpayKey = createAsyncThunk('/payment/key',async()=>{
     try {
         const response = await instance.get('/api/v1/payment/key')
@@ -41,10 +46,30 @@ export const verifyPayment = createAsyncThunk('/payment/verify' , async(data)=>{
     }
 })
 
+export const cancelSubscription = createAsyncThunk('/payment/subscription/cancel' , async (subscriptionID) => {
+
+    console.log(subscriptionID);
+    
+    try {
+        const response = instance.post('/api/v1/payment/cancel' , {subscriptionID})
+
+        toast.promise(response , {
+            loading:"wait for cancelation subscription.",
+            success:"your subscription successfully canceled"
+        })
+            return (await response).data
+    } catch (error) {
+        toast.error(error?.response?.data?.message || error?.message)
+        throw error
+    }
+})
+
 const rezorpaySlice = createSlice({
     name:'rezorpay',
     initialState,
-    reducers:{},
+    reducers:{
+        clearState:stateClear
+    },
     extraReducers:(builder) =>{
         builder.addCase(getRezorpayKey.fulfilled , (state , action)=>{
             state.rezorpay_key = action?.payload?.data
@@ -58,14 +83,10 @@ const rezorpaySlice = createSlice({
         builder.addCase(verifyPayment.rejected , (state)=>{
             state.isSubscribe = false
         })
-        builder.addCase(logout.fulfilled ,(state)=>{
-            state.isSubscribe = false,
-            state.plan_id = "",
-            state.rezorpay_key ="",
-            state.subscription_id =""
-        })
+        builder.addCase(cancelSubscription.fulfilled , stateClear)
+        builder.addCase(logout.fulfilled ,stateClear)
     }
 })
 
-
+export const {clearState} = rezorpaySlice.actions
 export default rezorpaySlice.reducer

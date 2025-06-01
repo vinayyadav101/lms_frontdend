@@ -4,14 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import HomeLayout from "../../Layouts/Homelayout";
-import { buySubscription, getRezorpayKey, verifyPayment } from "../../redux/slices/rezorpaySlice";
+import { getProfile } from "../../redux/slices/authSlice";
+import { buySubscription, clearState, getRezorpayKey, verifyPayment } from "../../redux/slices/rezorpaySlice";
 
 export default function SubscriptionCheckout(){
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {rezorpay_key , subscription_id} = useSelector(state => state.payment)
-    const {userName , email} = useSelector(state => state.auth.data)
+    const { data } = useSelector(state => state.auth)
 
 
         function handleSubmit(e) {
@@ -30,8 +31,8 @@ export default function SubscriptionCheckout(){
                     "color": "#3399cc"
                 },
                 "prefill":{
-                    "name":"vinay yadav",
-                    "email":"vinay@gmail.com",
+                    "name":data?.userName,
+                    "email":data?.email,
                     "contact":"1234567890"
                 },
                 "handler": async function(response) {
@@ -42,7 +43,13 @@ export default function SubscriptionCheckout(){
                         signature: response.razorpay_signature,
                     }))
 
-                    res ? navigate('/payment/success') : navigate('/paymnet/fail')   
+                    if (res?.payload?.success) {
+                        await dispatch(getProfile(data?._id))
+                        await dispatch(clearState())
+                            navigate('/payment/success')
+                    }else{
+                            navigate('/paymnet/fail')
+                    }   
                 },
                 // "modal": async function name(response) {
                     // in this bloack of code to maintain if user not payment and close checkout page the run this code and cancel subscription id
@@ -56,8 +63,14 @@ export default function SubscriptionCheckout(){
             }
 
             async function load(){
-                dispatch(getRezorpayKey())
-                dispatch(buySubscription())
+                const promise = Promise.all([
+                    dispatch(getRezorpayKey()),
+                    dispatch(buySubscription())
+                ])
+
+            toast.promise(promise,{
+                loading:"wait for loading some data"
+            })
                  
             }
         
