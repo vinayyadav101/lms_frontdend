@@ -46,9 +46,9 @@ export default function SubscriptionCheckout(){
                     if (res?.payload?.success) {
                         await dispatch(getProfile(data?._id))
                         await dispatch(clearState())
-                            navigate('/payment/success')
+                            navigate('/course/payment/success')
                     }else{
-                            navigate('/paymnet/fail')
+                            navigate('/course/payment/fail')
                     }   
                 },
                 // "modal": async function name(response) {
