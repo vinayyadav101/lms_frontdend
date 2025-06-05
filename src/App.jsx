@@ -11,6 +11,7 @@ import Contact from "./Pages/ContactPage";
 import CourseDetailPage from "./Pages/course/CourseDetailPage";
 import CoursesPage from "./Pages/course/CoursesPage";
 import HomePage from "./Pages/HomePage";
+import LecturesPage from "./Pages/lectures/LecturesPage";
 import Login from "./Pages/LoginPage";
 import NotFountPage from "./Pages/notFount";
 import FailPage from "./Pages/payment/FailPage";
@@ -43,6 +44,7 @@ export default function App(){
       <Route element={<RequireAuth myRoles={["admin","user"]}/>}>
         <Route path="/user/profile" element={<Profilepage />} />
         <Route path="/user/editprofile/:id" element={<EditProfile />} />
+        <Route path="/course/lectures/" element={<LecturesPage />} />
       </Route>
 
       <Route path="/courses" element={<CoursesPage />} />

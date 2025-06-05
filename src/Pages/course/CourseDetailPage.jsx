@@ -9,6 +9,7 @@ export default function CourseDetailPage() {
     const navigate = useNavigate()
     
     const {
+                _id,
                 title,
                 description,
                 category,
@@ -31,9 +32,13 @@ export default function CourseDetailPage() {
                     <p><span>Description</span>{description}</p>
                     <p><span>Instructor</span>{createdBy}</p>
                     {
-                        !data.subscription || data.subscription.status !== "Active" &&
+                        !data.subscription || data.subscription.status !== "Active" ?
                                         <button className="btn btn-primary" onClick={()=>navigate('/course/payment/subscribe')}>
                                             buy Subscription
+                                        </button>
+                                :
+                                        <button className="btn btn-primary" onClick={()=>navigate(`/course/lectures/?name=${title}&&id=${_id}`)}>
+                                            watch Lectures
                                         </button>
                     }
                 </div>

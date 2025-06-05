@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 
-export default  function CourseListCard({title , description , category , thumbnails , createdBy ,numberOfLectures}){
+export default  function CourseListCard({_id , title , description , category , thumbnails , createdBy ,numberOfLectures}){
     
     const navigate = useNavigate()
 
@@ -8,6 +8,7 @@ export default  function CourseListCard({title , description , category , thumbn
         navigate(
             "/course/details",
             {state : {
+                _id,
                 title,
                 description,
                 category,
@@ -19,7 +20,7 @@ export default  function CourseListCard({title , description , category , thumbn
     }
 
     return(
-        <div onClick={handelClick} className="bg-blue-500 flex p-4 gap-4 rounded-lg shadow-lg">
+        <div onClick={handelClick} className="bg-blue-500 flex p-4 gap-4 rounded-lg shadow-lg cursor-pointer">
             <div className="w-24 flex-shrink-0">
                 <img src={thumbnails?.secure_url} alt="course_image" className="w-full h-auto rounded-md" />
             </div>
