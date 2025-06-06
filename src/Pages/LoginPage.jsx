@@ -35,9 +35,9 @@ export default function Login(){
         if (!email) {
             return toast.error("enter valid email.")
         }
-        if (!password.length > 5 | !(password.length <= 8) ) {
+        if (!password.length > 5 | !(password.length <= 20) ) {
             
-            return toast.error("password length is grater then 5 and less then equal 8 .")
+            return toast.error("password length is grater then 5 and less then equal 20 .")
         }
 
         const res =  await dispatch(login(loginData))

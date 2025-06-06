@@ -5,7 +5,7 @@ import Homelayout from '../../Layouts/Homelayout'
 
 export default function CourseDetailPage() {
 
-    const {data} = useSelector(state => state.auth)
+    const {data , role} = useSelector(state => state.auth)
     const navigate = useNavigate()
     
     const {
@@ -17,7 +17,7 @@ export default function CourseDetailPage() {
                 createdBy,
                 numberOfLectures
     } = useLocation().state
-
+console.log(data)
     return(
         <Homelayout>
             <div className="flex justify-center items-center mx-16 h-[80vh]">
@@ -32,7 +32,9 @@ export default function CourseDetailPage() {
                     <p><span>Description</span>{description}</p>
                     <p><span>Instructor</span>{createdBy}</p>
                     {
-                        !data.subscription || data.subscription.status !== "Active" ?
+                        
+                        
+                        role === "user" && (data?.subscription?.status !== "Active") ?
                                         <button className="btn btn-primary" onClick={()=>navigate('/course/payment/subscribe')}>
                                             buy Subscription
                                         </button>
