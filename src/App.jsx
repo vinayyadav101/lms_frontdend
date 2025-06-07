@@ -1,15 +1,14 @@
 import { useEffect } from "react";
-import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
 import RequireAuth from "./component/RequireAuth";
-import { instance } from "./Helpers/axiosinstance";
 import AboutUs from "./Pages/AboutUsPage";
 import AccessDeniedPage from "./Pages/AccessDenied";
 import Contact from "./Pages/ContactPage";
 import CourseDetailPage from "./Pages/course/CourseDetailPage";
 import CoursesPage from "./Pages/course/CoursesPage";
+import CreateCoursePage from "./Pages/course/CreateCoursePage";
 import HomePage from "./Pages/HomePage";
 import LecturesPage from "./Pages/lectures/LecturesPage";
 import Login from "./Pages/LoginPage";
@@ -49,6 +48,7 @@ export default function App(){
 
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/course/details" element={<CourseDetailPage />} />
+      <Route path="/course/create" element={<CreateCoursePage />} />
 
 
       <Route path="/course/payment/subscribe" element={<SubscriptionCheckout />} />

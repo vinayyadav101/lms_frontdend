@@ -41,7 +41,20 @@ export const deleteLecture = createAsyncThunk('/courses/lecture/delete' , async(
     }
     
 })
+export const createCourseWithLecture = createAsyncThunk('/course/create',async(data)=>{
+    try {
+        const response =  instance.post('api/v1/course/createcourse' , data)
 
+            toast.promise(response , {
+                loading:"please wait course data are uploading!",
+                success:"successfully course created."
+            })
+            return (await response).data
+    } catch (error) {
+        toast.error(error?.response?.data?.message || error?.message)
+        throw error
+    }
+})
 
 const lectureSlice = createSlice({
     name:"lecture",
