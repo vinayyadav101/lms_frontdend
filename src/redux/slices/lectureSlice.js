@@ -56,6 +56,23 @@ export const createCourseWithLecture = createAsyncThunk('/course/create',async(d
     }
 })
 
+export const deleteFullCourse = createAsyncThunk('/course/delete',async(id)=>{
+    console.log(id);
+    
+    try {
+        const response = instance.delete(`api/v1/course/delete/?courseId=${id}`)
+
+            toast.promise(response , {
+                loading:"course deleting in database please wait!",
+                success:"course delete successfully."
+            })
+            return (await response).data
+    } catch (error) {
+        toast.error(error?.response?.data?.message || error?.message)
+        throw error
+    }
+})
+
 const lectureSlice = createSlice({
     name:"lecture",
     initialState,
@@ -63,6 +80,11 @@ const lectureSlice = createSlice({
     extraReducers:(builder =>{
         builder.addCase(getLectureAll.fulfilled , (state , action)=>{
             state.lectures = action?.payload?.data
+        })
+        builder.addCase(deleteFullCourse.fulfilled , (state)=>{
+            if (state.lectures.length !== 0) {
+                state.lectures = []
+            }
         })
     })
 })

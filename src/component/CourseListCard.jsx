@@ -21,8 +21,8 @@ export default  function CourseListCard({_id , title , description , category , 
 
     return(
         <div onClick={handelClick} className="bg-blue-500 flex p-4 gap-4 rounded-lg shadow-lg cursor-pointer">
-            <div className="w-24 flex-shrink-0">
-                <img src={thumbnails?.secure_url} alt="course_image" className="w-full h-auto rounded-md" />
+            <div className="flex flex-shrink-0 items-center ">
+                <img src={thumbnails?.secure_url} alt="course_image" className="rounded-md w-24 h-24" />
             </div>
             <div className="text-white">
                 <h1><span className="font-semibold">Title:</span> {title}</h1>

@@ -43,12 +43,13 @@ export default function App(){
       <Route element={<RequireAuth myRoles={["admin","user"]}/>}>
         <Route path="/user/profile" element={<Profilepage />} />
         <Route path="/user/editprofile/:id" element={<EditProfile />} />
+
         <Route path="/course/lectures/" element={<LecturesPage />} />
+        <Route path="/course/create" element={<CreateCoursePage />} />
       </Route>
 
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/course/details" element={<CourseDetailPage />} />
-      <Route path="/course/create" element={<CreateCoursePage />} />
 
 
       <Route path="/course/payment/subscribe" element={<SubscriptionCheckout />} />

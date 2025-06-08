@@ -27,46 +27,47 @@ export default function LecturesPage(){
         
     }
     useEffect(()=>{
-        id ? dispatch(getLectureAll(id)) : navigate('/courses')
-    },[])
-    useEffect(()=>{
         if (lectures.length === 0) {
             return setCurrentLecture("")
         }
-            setCurrentLecture(lectures[0]?.lecture?.secure_url || "")
+        setCurrentLecture(lectures[0]?.lecture?.secure_url || "")
     },[lectures])
+    useEffect(()=>{
+        console.log(id);
+        
+        id ? dispatch(getLectureAll(id)) : navigate('/courses')
+    },[])
 
     return(
         <HomeLayout>
-            {
-                currentLecture ? 
-                <div className='mx-16 flex  items-center flex-col h-[80vh] gap-10'>
-                <h1 className='tracking-widest text-5xl'>Course :{name}</h1>
+            
+                { currentLecture &&
+                    <div className='mx-16 flex  items-center flex-col h-[80vh] gap-10'>
+                    <h1 className='tracking-widest text-5xl'>Course :{name}</h1>
                     <div className='flex gap-3 mt-2 items-start'>
-                    <video src={currentLecture} typeof='video/mp4' controls  width="500" height="400" >
+                        <video src={currentLecture || ""}  typeof='video/mp4' controls  width="500" height="400" >
 
-                    </video>
-                <div className='w-full inline-block flex flex-col h-[400px] overflow-y-scroll scrollbar-none gap-3 '>
-                    {
-                        role === "admin" && 
-                            <button className="flex justify-start btn btn btn-primary w-fit">Upload Lecture</button>
-                    }
-                    {
-                        lectures.map((el,index) => <LectureList 
-                        key={index}
-                        id={index} 
-                        data={el} 
-                        role={role}
-                        callback={()=>{setCurrentLecture(el?.lecture?.secure_url)}} 
-                        active={currentLecture}
-                        onDelete={ondelete}
-                        />)
-                    }
+                        </video>
+                        <div className='w-full inline-block flex flex-col h-[400px] overflow-y-scroll scrollbar-none gap-3 '>
+                            {
+                                role === "admin" && 
+                                    <button className="flex justify-start btn btn btn-primary w-fit">Upload Lecture</button>
+                            }
+                            {
+                                lectures.map((el,index) => <LectureList 
+                                key={index}
+                                id={index} 
+                                data={el} 
+                                role={role}
+                                callback={()=>{setCurrentLecture(el?.lecture?.secure_url)}} 
+                                active={currentLecture}
+                                onDelete={ondelete}
+                                />)
+                            }
+                        </div>
+                    </div>
                 </div>
-                </div>
-            </div> :
-                navigate('/courses')
-            }
+                }
         </HomeLayout>
     )
 }

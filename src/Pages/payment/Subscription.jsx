@@ -75,10 +75,15 @@ export default function SubscriptionCheckout(){
             }
         
             useEffect(()=>{
-                load()
-                toast.promise(load , {
-                    loading:"wait for loading data"
-                })
+                if (data.isLogin) {
+                    load()
+                    toast.promise(load , {
+                        loading:"wait for loading data"
+                    })   
+                }else{
+                    toast.error("user not login")
+                    navigate('/login')
+                }
             },[])
         
             return(
