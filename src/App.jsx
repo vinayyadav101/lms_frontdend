@@ -6,6 +6,7 @@ import RequireAuth from "./component/RequireAuth";
 import AboutUs from "./Pages/AboutUsPage";
 import AccessDeniedPage from "./Pages/AccessDenied";
 import Contact from "./Pages/ContactPage";
+import AddLecturePage from "./Pages/course/AddLecturePage";
 import CourseDetailPage from "./Pages/course/CourseDetailPage";
 import CoursesPage from "./Pages/course/CoursesPage";
 import CreateCoursePage from "./Pages/course/CreateCoursePage";
@@ -47,7 +48,7 @@ export default function App(){
         <Route path="/course/lectures/" element={<LecturesPage />} />
         <Route path="/course/create" element={<CreateCoursePage />} />
       </Route>
-
+      <Route path="course/lecture/upload" element={<AddLecturePage />}/>
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/course/details" element={<CourseDetailPage />} />
 

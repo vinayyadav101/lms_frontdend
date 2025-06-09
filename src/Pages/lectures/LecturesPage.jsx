@@ -33,8 +33,6 @@ export default function LecturesPage(){
         setCurrentLecture(lectures[0]?.lecture?.secure_url || "")
     },[lectures])
     useEffect(()=>{
-        console.log(id);
-        
         id ? dispatch(getLectureAll(id)) : navigate('/courses')
     },[])
 
@@ -51,7 +49,7 @@ export default function LecturesPage(){
                         <div className='w-full inline-block flex flex-col h-[400px] overflow-y-scroll scrollbar-none gap-3 '>
                             {
                                 role === "admin" && 
-                                    <button className="flex justify-start btn btn btn-primary w-fit">Upload Lecture</button>
+                                    <button className="flex justify-start btn btn btn-primary w-fit" onClick={()=>navigate(`/course/lecture/upload/?id=${id}`)}>Upload Lecture</button>
                             }
                             {
                                 lectures.map((el,index) => <LectureList 
